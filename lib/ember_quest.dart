@@ -83,6 +83,12 @@ Color backgroundColor() {
               xOffset: xPositionOffset,
             ),
           );
+           world.add(
+          Star(
+            gridPosition: Vector2(block.gridPosition.x + 1, block.gridPosition.y), // Adjust the position as needed
+            xOffset: xPositionOffset,
+          ),
+        );
         break;
         case WaterEnemy:
           world.add(
