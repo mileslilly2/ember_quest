@@ -1,7 +1,9 @@
 import 'package:flame/events.dart';
 import 'package:flutter/material.dart';
+import 'overlays/hud.dart';
 
 import 'package:flame/components.dart';
+
 import 'package:flame/game.dart';
 import 'actors/ember.dart';
 
@@ -18,6 +20,8 @@ class EmberQuestGame extends FlameGame
   late EmberPlayer _ember;
   double objectSpeed = 0.0;
   late double lastBlockXPosition = 0.0;
+  int starsCollected = 0;
+  int health = 3;
   late UniqueKey lastBlockKey;
 
 
@@ -49,7 +53,7 @@ Color backgroundColor() {
   }
 
 
-    void initializeGame() {
+  void initializeGame() {
     // Assume that size.x < 3200
     final segmentsToLoad = (size.x / 640).ceil();
     segmentsToLoad.clamp(0, segments.length);
@@ -62,6 +66,7 @@ Color backgroundColor() {
       position: Vector2(128, canvasSize.y - 128),
     );
     world.add(_ember);
+    camera.viewport.add(Hud());
   }
 
   void loadGameSegments(int segmentIndex, double xPositionOffset) {

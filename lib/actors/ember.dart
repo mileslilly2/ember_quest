@@ -109,6 +109,10 @@ void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
 if (other is WaterEnemy) {
   hit();
 }
+if (other is Star) {
+  other.removeFromParent();
+  game.starsCollected++;
+}
 
   super.onCollision(intersectionPoints, other);
 }
