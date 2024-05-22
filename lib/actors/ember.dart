@@ -65,6 +65,7 @@ class EmberPlayer extends SpriteAnimationComponent
 // to make it blink.
   void hit() {
     if (!hitByEnemy) {
+      game.health -= 1;
       hitByEnemy = true;
     }
     add(
@@ -152,14 +153,14 @@ if (other is Star) {
     velocity.x = 0;
     game.objectSpeed = -moveSpeed;
   }
-    // If ember fell in pit, then game over.
-  if (position.y > game.size.y + size.y) {
-    game.health = 0;
-  }
+  // If ember fell in pit, then game over.
+if (position.y > game.size.y + size.y) {
+  game.health = 0;
+}
 
-  if (game.health <= 0) {
-    removeFromParent();
-  }
+if (game.health <= 0) {
+  removeFromParent();
+}
 
   position += velocity * dt;
   super.update(dt);
