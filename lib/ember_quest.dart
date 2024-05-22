@@ -33,9 +33,9 @@ Color backgroundColor() {
 
 
 
-  @override
-  Future<void> onLoad() async {
-    await images.loadAll([
+@override
+Future<void> onLoad() async {
+  await images.loadAll([
       'block.png',
       'ember.png',
       'ground.png',
@@ -43,31 +43,38 @@ Color backgroundColor() {
       'heart.png',
       'star.png',
       'water_enemy.png',
-    ]);
+  ]);
+  
+  camera.viewfinder.anchor = Anchor.topLeft;
+  initializeGame(true);
+}
 
-    camera.viewfinder.anchor = Anchor.topLeft;
-    
-    initializeGame();
+void initializeGame(bool loadHud) {
+  // Assume that size.x < 3200
+  final segmentsToLoad = (size.x / 640).ceil();
+  segmentsToLoad.clamp(0, segments.length);
 
-
+  for (var i = 0; i <= segmentsToLoad; i++) {
+    loadGameSegments(i, (640 * i).toDouble());
   }
 
-
-  void initializeGame() {
-    // Assume that size.x < 3200
-    final segmentsToLoad = (size.x / 640).ceil();
-    segmentsToLoad.clamp(0, segments.length);
-
-    for (var i = 0; i <= segmentsToLoad; i++) {
-      loadGameSegments(i, (640 * i).toDouble());
-    }
-
-    final _ember = EmberPlayer(
-      position: Vector2(128, canvasSize.y - 128),
-    );
-    world.add(_ember);
-    camera.viewport.add(Hud());
+  _ember = EmberPlayer(
+    position: Vector2(128, canvasSize.y - 128),
+  );
+  add(_ember);
+  if (loadHud) {
+    add(Hud());
   }
+}
+
+void reset() {
+  starsCollected = 0;
+  health = 3;
+  initializeGame(false);
+}
+
+
+
 
   void loadGameSegments(int segmentIndex, double xPositionOffset) {
     for (final block in segments[segmentIndex]) {
@@ -111,4 +118,5 @@ Color backgroundColor() {
       }
     }
   }
+
 }
