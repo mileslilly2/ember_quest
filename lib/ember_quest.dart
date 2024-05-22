@@ -1,3 +1,4 @@
+import 'package:flame/events.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flame/components.dart';
@@ -10,7 +11,9 @@ import 'objects/ground_block.dart';
 import 'objects/platform_block.dart';
 import 'objects/star.dart';
 
-class EmberQuestGame extends FlameGame {
+class EmberQuestGame extends FlameGame
+    with HasCollisionDetection, HasKeyboardHandlerComponents {
+  
   EmberQuestGame();
   late EmberPlayer _ember;
   double objectSpeed = 0.0;
@@ -39,7 +42,9 @@ Color backgroundColor() {
     ]);
 
     camera.viewfinder.anchor = Anchor.topLeft;
+    
     initializeGame();
+
 
   }
 
@@ -54,7 +59,7 @@ Color backgroundColor() {
     }
 
     final _ember = EmberPlayer(
-      position: Vector2(128, canvasSize.y - 70),
+      position: Vector2(128, canvasSize.y - 128),
     );
     world.add(_ember);
   }
